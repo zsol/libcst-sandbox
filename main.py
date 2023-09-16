@@ -217,7 +217,9 @@ class DisplayNodes:
     def _(self, e, id_prefix: str):
         global MODULE, POS, IDDICT
         id_ = f"{id_prefix}.{type(e).__name__}"
-        yield f"<div class='cstnode' id='{IDDICT[e]}'>"
+        pos = POS[e]
+        jsRange = f"{{startLineNumber: {pos.start.line}, startColumn: {pos.start.column}, endLineNumber: {pos.end.line}, endColumn: {pos.end.column}}}"
+        yield f"<div class='cstnode' id='{IDDICT[e]}' onclick='editor.setSelection({jsRange})'>"
         yield "<span class='cstnodename'>"
         yield type(e).__name__
         yield "</span>"
